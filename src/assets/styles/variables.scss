@@ -1,0 +1,27 @@
+@import "/src/assets/fonts/font.css";
+
+$white: #fff;
+$black: #000;
+
+$red: #dc3545;
+$blue: #0d6efd;
+$gray: #e0e0e0;
+$light-gray: #fbfbfb;
+$pale-gray: #e9ecef;
+$dark-gray: #6c757d;
+
+$shadow-pos: 0px 0px 1rem 0px;
+$shadow: $shadow-pos rgba(0, 0, 0, 0.1);
+
+$anim-f: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$anim-s: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+$tr-height: height $anim-s;
+$tr-width: width $anim-s;
+$tr-color: color $anim-f;
+$tr-bgr: background $anim-f;
+$tr-border: border $anim-f;
+$tr-transform: transform $anim-f;
+$tr-move: top $anim-f, right $anim-f, bottom $anim-f, left $anim-f;
+$tr-opacity: opacity $anim-f;
+
+$font-family: Montserrat !important;

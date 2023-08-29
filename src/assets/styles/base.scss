@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+html,
+body {
+    font-family: $font-family;
+    color: $black;
+}
+
+html {
+    font-size: 10px;
+
+    @media screen and (max-width: 1600px) {
+        font-size: 9.5px;
+    }
+
+    @media screen and (max-width: 1534px) {
+        font-size: 9px;
+    }
+
+    @media screen and (max-width: 1440px) {
+        font-size: 8.5px;
+    }
+
+    @media screen and (max-width: 1366px) {
+        font-size: 8px;
+    }
+}
+
+input,
+button {
+    font-family: $font-family;
+}
+
+button {
+    padding-block: 0;
+    padding-inline: 0;
+    align-items: stretch;
+    border: none;
+    background-color: unset;
+    text-align: left;
+    color: $black;
+    cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
