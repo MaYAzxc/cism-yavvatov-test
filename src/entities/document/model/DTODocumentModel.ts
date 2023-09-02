@@ -1,6 +1,6 @@
 export default interface DocumentModel {
     id: number;
     name: string;
-    blob: Blob | null;
+    image: string | null;
     description: string;
 }

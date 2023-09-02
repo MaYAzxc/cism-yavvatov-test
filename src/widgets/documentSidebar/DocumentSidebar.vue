@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { DocumentSearch, DocumentsList } from "@/entities/document/ui";
-import type { DocumentModel } from "@/entities/document";
+import { DocumentsList, type DocumentModel } from "@/entities/document";
+import { SearchDocuments } from "@/features/document/searchDocuments";
 
 interface Props {
     searchText?: string;
@@ -31,12 +31,12 @@ const searchText = computed({
         <div class="document-sidebar__search">
             <label>
                 <div>Поиск документа</div>
-                <DocumentSearch v-model="searchText" />
+                <SearchDocuments v-model="searchText" />
             </label>
         </div>
         <div class="document-sidebar__results">
             <div class="document-sidebar__results__title">Результаты</div>
-            <div class="document-sidebar__results__list">
+            <div class="document-sidebar__results__list my-scroll">
                 <div v-if="!props.documents">loading..</div>
                 <DocumentsList
                     v-else-if="props.documents.length"
@@ -91,19 +91,6 @@ const searchText = computed({
             padding: 1rem 2rem;
             margin: 0.8rem 0;
             overflow: auto;
-
-            &::-webkit-scrollbar {
-                width: 0.6rem;
-                background-color: $pale-gray;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                background-color: rgba($dark-gray, 0.5);
-
-                &:hover {
-                    background-color: $dark-gray;
-                }
-            }
         }
     }
 }

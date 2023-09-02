@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ImageIcon } from "@/assets/icons";
 import type { DocumentModel } from "../model";
+import { computed } from "vue";
 
 interface Props {
     item: DocumentModel;
@@ -12,37 +13,20 @@ const props = defineProps<Props>();
 const emit = defineEmits<{
     (e: "click"): void;
 }>();
-//const img = new Image();
-//try {
-//    img.src = props.item.image; //здесь начнется загрузка картинки
-//    img.onload = function () {
-//        console.log("LOAD", img.width, img.height); // а вот здесь мы уже знаем ее размеры
-//    };
-//} catch (error) {
-//    console.log(error);
-//}
-const getImageSizeInBytes = (imgURL: string) => {
-    const request = new XMLHttpRequest();
-    request.open("HEAD", imgURL, false);
-    request.send(null);
-    const headerText = request.getAllResponseHeaders();
-    const re = /Content\-Length\s*:\s*(\d+)/i;
-    re.exec(headerText);
-    return parseInt(RegExp.$1);
-};
 
-//console.log(getImageSizeInBytes(props.item.image));
+const url = computed(() => (props.item.blob ? URL.createObjectURL(props.item.blob) : null));
+const size = computed(() => (props.item.blob ? Math.trunc(props.item.blob.size / 1024) : null));
 </script>
 
 <template>
     <button type="button" class="result-document-item" :class="{ active: props.active }" @click="emit('click')">
         <div class="result-document-item__img">
-            <img v-if="props.item.image" :src="props.item.image" :alt="props.item.name" />
+            <img v-if="url" :src="url" :alt="props.item.name" />
             <ImageIcon v-else />
         </div>
         <div class="result-document-item__info">
             <div class="result-document-item__info-name">{{ props.item.name }}</div>
-            <div class="result-document-item__info-size">12 MB</div>
+            <div v-if="size" class="result-document-item__info-size">{{ size }}MB</div>
         </div>
     </button>
 </template>

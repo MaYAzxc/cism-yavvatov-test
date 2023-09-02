@@ -10,7 +10,7 @@ $light-gray: #fbfbfb;
 $pale-gray: #e9ecef;
 $dark-gray: #6c757d;
 
-$shadow-pos: 0px 0px 1rem 0px;
+$shadow-pos: 0rem 0rem 1rem 0rem;
 $shadow: $shadow-pos rgba(0, 0, 0, 0.1);
 
 $anim-f: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -25,3 +25,5 @@ $tr-move: top $anim-f, right $anim-f, bottom $anim-f, left $anim-f;
 $tr-opacity: opacity $anim-f;
 
 $font-family: Montserrat !important;
+
+$mobile: 640px;

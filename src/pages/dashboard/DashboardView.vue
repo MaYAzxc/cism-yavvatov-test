@@ -2,7 +2,8 @@
 import { ref, watchEffect } from "vue";
 import { useDashboardStore } from "@/stores";
 import { useDebouncedRef } from "@/shared/hooks";
-import { DocumentSidebar, DocumentInfo } from "@/widgets/document";
+import { DocumentSidebar } from "@/widgets/documentSidebar";
+import { DocumentInfo } from "@/widgets/documentInfo";
 import { type DocumentModel } from "@/entities/document";
 
 const dashboardStore = useDashboardStore();
@@ -16,6 +17,13 @@ watchEffect(() => {
 });
 
 const currentDocument = ref<DocumentModel>();
+
+const deleteDocument = () => {
+    if (currentDocument.value) {
+        dashboardStore.deleteDocumentById(currentDocument.value?.id);
+        currentDocument.value = undefined;
+    }
+};
 </script>
 
 <template>
@@ -33,7 +41,11 @@ const currentDocument = ref<DocumentModel>();
                     @click-item-document="currentDocument = $event"
                 />
                 <div class="dashboard-block__detail">
-                    <DocumentInfo v-if="currentDocument" :document="currentDocument" />
+                    <DocumentInfo
+                        v-if="currentDocument"
+                        :document="currentDocument"
+                        @delete-document="deleteDocument"
+                    />
                     <div v-else class="dashboard-block__detail__empty">
                         Выберите документ, чтобы посмотреть его содержиое
                     </div>
@@ -54,12 +66,17 @@ const currentDocument = ref<DocumentModel>();
 
     &-container {
         padding: 0 5rem;
+
+        @media screen and (max-width: $mobile) {
+            padding: 0 2rem;
+        }
     }
 
     &-header {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
+        flex-wrap: wrap;
         flex-shrink: 0;
         padding-top: 4rem;
         padding-bottom: 2rem;
@@ -73,6 +90,10 @@ const currentDocument = ref<DocumentModel>();
             font-size: 3.2rem;
             font-weight: 3.9rem;
         }
+
+        @media screen and (max-width: $mobile) {
+            padding-top: 2rem;
+        }
     }
 
     &-content {
@@ -80,6 +101,10 @@ const currentDocument = ref<DocumentModel>();
         padding-top: 1.5rem;
         padding-bottom: 5.8rem;
         overflow: hidden;
+
+        @media screen and (max-width: $mobile) {
+            padding-bottom: 2.8rem;
+        }
     }
 
     &-block {
@@ -101,6 +126,20 @@ const currentDocument = ref<DocumentModel>();
                 font-size: 1.4rem;
                 line-height: 1.7rem;
                 color: $dark-gray;
+            }
+        }
+
+        @media screen and (max-width: $mobile) {
+            flex-direction: column;
+
+            .document-sidebar {
+                height: 50%;
+            }
+
+            &__detail {
+                height: 50%;
+                border-left: none;
+                border-top: 1px solid $gray;
             }
         }
     }
