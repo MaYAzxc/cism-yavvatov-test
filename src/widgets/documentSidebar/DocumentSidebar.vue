@@ -37,14 +37,18 @@ const searchText = computed({
         <div class="document-sidebar__results">
             <div class="document-sidebar__results__title">Результаты</div>
             <div class="document-sidebar__results__list my-scroll">
-                <div v-if="!props.documents">loading..</div>
+                <div v-if="!props.documents">
+                    <h2>Загрузка..</h2>
+                </div>
                 <DocumentsList
                     v-else-if="props.documents.length"
                     :list="props.documents"
                     :currentDocumentId="currentDocumentId"
                     @click-item="emit('clickItemDocument', $event)"
                 />
-                <div v-else>Ничего не найдено</div>
+                <div v-else>
+                    <h2>Ничего не найдено</h2>
+                </div>
             </div>
         </div>
     </div>

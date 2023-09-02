@@ -20,11 +20,14 @@ export const useDashboardStore = defineStore("dashboard", () => {
         return imagesBlob;
     };
 
-    const getUnionWithImagesDocuments = (dtoDocuments: DTODocumentModel[], imagesBlob: ImagesBlob): DocumentModel[] => {
+    const getUnionWithImagesDocuments = (
+        dtoDocuments: DTODocumentModel[],
+        imagesBlob?: ImagesBlob
+    ): DocumentModel[] => {
         return dtoDocuments.map((dtoDocument, i) => ({
             id: dtoDocument.id,
             name: dtoDocument.name,
-            blob: imagesBlob[i],
+            blob: imagesBlob ? imagesBlob[i] : null,
             description: dtoDocument.description,
         }));
     };
@@ -34,9 +37,14 @@ export const useDashboardStore = defineStore("dashboard", () => {
         documentApi
             .getDocumentsByUser(user)
             .then(async (dtoDocuments) => {
-                getDocumentsWithImgData(dtoDocuments).then((imagesBlob) => {
-                    documents.value = getUnionWithImagesDocuments(dtoDocuments, imagesBlob);
-                });
+                getDocumentsWithImgData(dtoDocuments)
+                    .then((imagesBlob) => {
+                        documents.value = getUnionWithImagesDocuments(dtoDocuments, imagesBlob);
+                    })
+                    .catch((e) => {
+                        documents.value = getUnionWithImagesDocuments(dtoDocuments);
+                        console.log(e);
+                    });
             })
             .catch((e) => {
                 alert("Ошибка запроса");
